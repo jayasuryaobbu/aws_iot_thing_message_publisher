@@ -15,6 +15,9 @@ PATH_TO_ROOT = os.getenv("AWS_ROOT_CA_PATH")
 PATH_TO_KEY = os.getenv("AWS_PRIVATE_KEY_PATH")
 PATH_TO_CERT = os.getenv("AWS_CERTIFICATE_PATH")
 
+# Topic to publish to
+TOPIC = "topic/send"
+
 # Payload to send (Replace with your own message as key value pairs)
 PAYLOAD = {
     "thingName": THING_NAME,
@@ -23,7 +26,7 @@ PAYLOAD = {
 }
 
 
-def send_message_to_device(payload):
+def send_message_to_device(payload, topic):
     # Validate configuration
     if not all([THING_NAME, AWS_HOST, PATH_TO_ROOT, PATH_TO_KEY, PATH_TO_CERT]):
         print("Error: Missing configuration. Please check your .env file.")
@@ -43,11 +46,6 @@ def send_message_to_device(payload):
         # Prepare message
         message_json = json.dumps(payload)
 
-        # Construct topic (logic preserved from original code)
-        # Extracts part of the thing name for the topic structure
-        topic_part = '_'.join(THING_NAME.split('_')[:-1])
-        topic = f"tresna/{topic_part}/atod"
-
         # Publish
         client.publish(topic, message_json, 1)
         print(f"Published: '{message_json}' to topic '{topic}'")
@@ -64,4 +62,4 @@ def send_message_to_device(payload):
 
 
 if __name__ == "__main__":
-    send_message_to_device(PAYLOAD)
+    send_message_to_device(PAYLOAD, TOPIC)

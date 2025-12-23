@@ -51,6 +51,10 @@ The script will:
 3.  Publish a payload (e.g., `{"action": "setRelayMode", "value": "OFF"}`) to the topic `topic/send`.
 4.  Disconnect.
 
+## Customization
+
+You can modify the `TOPIC` and `PAYLOAD` variables directly in `main.py` to change the destination topic or the message content.
+
 ## Project Structure
 
 -   `main.py`: The main entry point for the application.
